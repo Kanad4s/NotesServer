@@ -6,6 +6,8 @@ import (
 )
 
 func main() {
-	db.Connect()
+	db1 := db.Connect()
+    db.Request("select * from professions", db1)
+    db.Close(db1)
     // fmt.Println(bd)
 }

@@ -21,14 +21,16 @@ type Response struct {
     Salary 	int		`db:"w_salary"`
 }
 
-func Connect() {
+// var db *sqlx.DB
+
+func Connect() (db *sqlx.DB) {
 	dbInfo := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable",
         host, port, dbname)
 	db, err := sqlx.Connect("postgres", dbInfo)
 	if err != nil {
 		panic(err)
 	}
-	defer db.Close()
+	// defer db.Close()
 
 	err = db.Ping()
 	if err != nil {
@@ -47,4 +49,22 @@ func Connect() {
 		log.Fatal(err)
 	}
 	fmt.Println(response)
+	return
+}
+
+func Request(request string, db *sqlx.DB) {
+	rows, err := db.Query(request)
+	if err != nil {
+		panic(err)
+	}
+	
+	response := make([]Response, 0, 5)
+	if err := sqlx.StructScan(rows, &response); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(response)
+}
+
+func Close(db *sqlx.DB) {
+	db.Close()
 }
