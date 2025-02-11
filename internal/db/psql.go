@@ -1,13 +1,11 @@
 package db
 
 import (
-	"database/sql"
-	_ "github.com/lib/pq"
 	"fmt"
 	"log"
+	_ "github.com/lib/pq"
+	"github.com/jmoiron/sqlx"
 )
-
-//  http://84.237.50.81:8080/apex
 
 const (
 	host 	 = "localhost"
@@ -18,15 +16,15 @@ const (
 )
 
 type Response struct {
-	id int
-    name string
-    salary int
+	Id 		int		`db:"w_id"`
+    Name 	string 	`db:"w_name"`
+    Salary 	int		`db:"w_salary"`
 }
 
 func Connect() {
 	dbInfo := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable",
         host, port, dbname)
-	db, err := sql.Open("postgres", dbInfo)
+	db, err := sqlx.Connect("postgres", dbInfo)
 	if err != nil {
 		panic(err)
 	}
@@ -38,24 +36,15 @@ func Connect() {
 	}
 
 	fmt.Printf("BD connected!\n")
+
 	rows, err := db.Query("select * from professions")
 	if err != nil {
 		panic(err)
 	}
 	
-	response := make([]Response, 0)
-    for rows.Next() {
-        var id int
-        var name string
-        var salary int
-        if err := rows.Scan(&id, &name, &salary); err != nil {
-            log.Fatal(err)
-        }
-        response = append(response, Response{
-			id: id,
-			name: name,
-			salary: salary,
-		})
-    }
+	response := make([]Response, 0, 5)
+	if err := sqlx.StructScan(rows, &response); err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println(response)
 }
