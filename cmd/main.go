@@ -2,10 +2,10 @@ package main
 
 import (
 	// "fmt"
-    "NotesServer/internal/bd"
+    "NotesServer/internal/db"
 )
 
 func main() {
-	bd.Connect()
+	db.Connect()
     // fmt.Println(bd)
 }

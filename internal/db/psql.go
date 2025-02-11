@@ -1,4 +1,4 @@
-package bd
+package db
 
 import (
 	"database/sql"
@@ -17,11 +17,11 @@ const (
     dbname   = "postgres"
 )
 
-// type res struct {
-// 	id int
-//     name string
-//     salary int
-// }
+type Response struct {
+	id int
+    name string
+    salary int
+}
 
 func Connect() {
 	dbInfo := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable",
@@ -38,30 +38,24 @@ func Connect() {
 	}
 
 	fmt.Printf("BD connected!\n")
-	rows, ok := db.Query("select * from professions")
-	if ok != nil {
+	rows, err := db.Query("select * from professions")
+	if err != nil {
 		panic(err)
 	}
-	// fmt.Printf("response: \n%v\n", response)
 	
-	// fmt.Println(response.)
-	ids := make([]int, 0)
-	names := make([]string, 0)
-	salaries := make([]int, 0)
+	response := make([]Response, 0)
     for rows.Next() {
         var id int
         var name string
         var salary int
-		// var resp res
         if err := rows.Scan(&id, &name, &salary); err != nil {
             log.Fatal(err)
         }
-		// fmt.Println(resp)
-        ids = append(ids, id)
-        names = append(names, name)
-        salaries = append(salaries, salary)
+        response = append(response, Response{
+			id: id,
+			name: name,
+			salary: salary,
+		})
     }
-	fmt.Println(ids)
-	fmt.Println(names)
-	fmt.Println(salaries)
+	fmt.Println(response)
 }
