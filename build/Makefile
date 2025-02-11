@@ -4,7 +4,10 @@ SRC_DIR = ../cmd
 BUILD_DIR = ./
 GO = go
 
-.PHONY: build clean help
+.PHONY: run build clean help
+
+run: build
+	./$(BUILD_DIR)/$(TARGET)
 
 build: clean
 	$(GO) mod tidy
