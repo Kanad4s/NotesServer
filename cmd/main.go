@@ -17,7 +17,6 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	// log.Logger.Info("Finishing...")
 	fmt.Println(val)
 	log.TestAll()
 	slog.Debug("Finishing...")
