@@ -3,14 +3,26 @@ package main
 import (
 	"NotesServer/internal/cli"
 	"NotesServer/internal/db"
+	"NotesServer/internal/log"
 	"fmt"
-	// "NotesServer/internal/log"
 	"log/slog"
 )
 
+func init() {
+	log.Setup()
+	// log.Info("Main init")
+	// slog.Info("abs", slog.String("arg1", "val1"), slog.String("arg2", "val2"))
+}
+
 func main() {
-	db1 := db.Connect()
-	db.Request("select * from professions", db1)
+	dbInfo := db.DbInfo{
+		Host:    "localhost",
+		Port:    5432,
+		Name:    "postgres",
+		Sslmode: "disable",
+	}
+	db1 := db.Connect(dbInfo)
+	db.Query("select * from professions", db1)
 	db.Close(db1)
 	cli.ShowNavigation()
 	val, err := cli.GetNumber()

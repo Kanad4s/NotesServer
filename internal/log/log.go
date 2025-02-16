@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func init() {
+func Setup() {
 	logLevel := &slog.LevelVar{}
 	opts := &slog.HandlerOptions{
 		AddSource: false,
@@ -56,9 +56,11 @@ func TestAll() {
 func TestDebug() {
 	slog.Debug("Test debug")
 }
+
 func TestError() {
 	slog.Error("Test error")
 }
+
 func TestWarn() {
 	slog.Warn("Test warn")
 }
