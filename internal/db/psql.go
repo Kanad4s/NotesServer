@@ -2,67 +2,76 @@ package db
 
 import (
 	"fmt"
-	"log"
-	_ "github.com/lib/pq"
+	"log/slog"
+
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq"
 )
 
 const (
-	host 	 = "localhost"
+	host     = "localhost"
 	port     = 5432
-    user     = "kanad4s"
-    password = ""
-    dbname   = "postgres"
+	user     = "kanad4s"
+	password = ""
+	dbname   = "postgres"
 )
 
 type Response struct {
-	Id 		int		`db:"w_id"`
-    Name 	string 	`db:"w_name"`
-    Salary 	int		`db:"w_salary"`
+	Id     int    `db:"w_id"`
+	Name   string `db:"w_name"`
+	Salary int    `db:"w_salary"`
 }
 
-// var db *sqlx.DB
+type DbInfo struct {
+	Host    string
+	Port    int
+	Name    string
+	Sslmode string
+}
 
-func Connect() (db *sqlx.DB) {
-	dbInfo := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=disable",
-        host, port, dbname)
-	db, err := sqlx.Connect("postgres", dbInfo)
+func Connect(dbInfo DbInfo) (db *sqlx.DB) {
+	info := fmt.Sprintf("host=%s port=%d dbname=%s sslmode=%s",
+		dbInfo.Host, dbInfo.Port, dbInfo.Name, dbInfo.Sslmode)
+	db, err := sqlx.Connect("postgres", info)
 	if err != nil {
+		slog.Error(err.Error())
 		panic(err)
 	}
 	// defer db.Close()
 
-	err = db.Ping()
-	if err != nil {
-		panic(err)
-	}
-
-	fmt.Printf("BD connected!\n")
-
-	rows, err := db.Query("select * from professions")
-	if err != nil {
-		panic(err)
-	}
-	
-	response := make([]Response, 0, 5)
-	if err := sqlx.StructScan(rows, &response); err != nil {
-		log.Fatal(err)
-	}
-	fmt.Println(response)
+	// err = db.Ping()
+	// if err != nil {
+	// 	panic(err)
+	// }
+	slog.Info("DB connected:", slog.String("dbinfo", info))
 	return
 }
 
-func Request(request string, db *sqlx.DB) {
+func Query(request string, db *sqlx.DB) {
 	rows, err := db.Query(request)
 	if err != nil {
+		slog.Error(err.Error())
 		panic(err)
 	}
-	
+
 	response := make([]Response, 0, 5)
 	if err := sqlx.StructScan(rows, &response); err != nil {
-		log.Fatal(err)
+		slog.Error(err.Error())
 	}
+
+	slog.Info("response of: " + request + " parsed")
 	fmt.Println(response)
+}
+
+func Select(request string, db *sqlx.DB) {
+	response := make([]Response, 0, 5)
+	err := db.Select(&response, request)
+	if err != nil {
+		slog.Error(err.Error())
+		panic(err)
+	}
+	slog.Info("response of: " + request + " parsed")
+	fmt.Printf("%v\n", response)
 }
 
 func Close(db *sqlx.DB) {
