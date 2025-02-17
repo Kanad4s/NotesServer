@@ -5,17 +5,19 @@ import (
 	"os"
 )
 
+var file *os.File
+
 func Setup() {
 	logLevel := &slog.LevelVar{}
 	opts := &slog.HandlerOptions{
 		AddSource: false,
 		Level:     logLevel,
 	}
-	file, err := os.OpenFile("server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
+	var err error
+	file, err = os.OpenFile("server.log", os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 	if err != nil {
 		panic(err)
 	}
-	// defer file.Close()
 
 	handler := getHandler(file, opts)
 	Logger := slog.New(handler)
@@ -23,6 +25,11 @@ func Setup() {
 	setLogLevel(logLevel)
 
 	Logger.Debug("Log init done")
+}
+
+func Finish() {
+	slog.SetDefault(slog.Default())
+	file.Close()
 }
 
 func getHandler(file *os.File, opts *slog.HandlerOptions) slog.Handler {
@@ -55,6 +62,7 @@ func TestAll() {
 
 func TestDebug() {
 	slog.Debug("Test debug")
+	slog.SetDefault(slog.Default())
 }
 
 func TestError() {
