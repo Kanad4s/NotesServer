@@ -14,7 +14,8 @@ sudo apt install -y \
 	libreadline-dev \
 	make \
 	libperl-dev \
-	libipc-run-perl
+	libipc-run-perl \
+	libicu-dev 
 ```
 
 ### Configure
