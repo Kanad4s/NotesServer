@@ -1,0 +1,22 @@
+{
+  "name": "notesserver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kanad4s/NotesServer.git"
+  },
+  "author": "kanad4s",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Kanad4s/NotesServer/issues"
+  },
+  "homepage": "https://github.com/Kanad4s/NotesServer#readme"
+}
