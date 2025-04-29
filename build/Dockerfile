@@ -1,17 +1,23 @@
 FROM golang:alpine AS builder
 
-WORKDIR /build
-
-ADD go.mod .
+WORKDIR /NotesServer
 
 COPY . .
 
-RUN make
+RUN apt-get update && \
+    apt-get install -y \
+    make \
+    && \\
+    make -C ./build
+RUN ls
 
-FROM alpine
+FROM ubuntu:24.04
 
 WORKDIR /build
 
-COPY --from=builder /build/notes-server /build/notes-server
+COPY --from=builder /build/notes-server .
+
+RUN ls
+RUN pwd
 
 CMD [". /notes-server"]

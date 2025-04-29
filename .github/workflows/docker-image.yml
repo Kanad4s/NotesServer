@@ -8,6 +8,27 @@ on:
 
 jobs:
   build:
+
+    runs-on: ubuntu-24.04
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Install dependencies
+      run: make -C ./build
+
+    - name: Run check
+      run: echo make check -C ./build
+  
+  test:
+
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: start tests
+        run: sleep 10s
+  
+  docker:
+    
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
