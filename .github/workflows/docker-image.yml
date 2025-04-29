@@ -39,4 +39,4 @@ jobs:
     - name: Run one line script
       run: echo Hello, World
     - name: Build the Docker image
-      run: docker build ./build --tag notesserver:$(date +%s)
+      run: docker build . --tag notesserver:v1
