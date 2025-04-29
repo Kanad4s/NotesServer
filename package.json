@@ -18,5 +18,14 @@
   "bugs": {
     "url": "https://github.com/Kanad4s/NotesServer/issues"
   },
-  "homepage": "https://github.com/Kanad4s/NotesServer#readme"
+  "homepage": "https://github.com/Kanad4s/NotesServer#readme",
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.2",
+    "@semantic-release/npm": "^12.0.1",
+    "ci": "^2.3.0",
+    "npm": "^11.3.0",
+    "semantic-release": "^24.2.3"
+  }
 }
