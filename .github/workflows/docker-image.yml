@@ -25,10 +25,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: start tests
-        run: sleep 10s
+        run: sleep 20s
   
   docker:
-    
+
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
