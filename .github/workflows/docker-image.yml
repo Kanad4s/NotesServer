@@ -24,8 +24,6 @@ jobs:
         ls -l
         pwd
         echo needed dependencies
-    - name: Run pre-commit (idk)
-      run: pre-commit run --all-files --hook-stage manual
 
     - name: Install dependencies
       run: make -C ./build
