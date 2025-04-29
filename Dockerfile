@@ -19,4 +19,5 @@ COPY --from=builder /NotesServer/build/notes-server .
 # Дополнительные файлы (конфиги, статика)
 # COPY --from=builder /NotesServer/configs /etc/myapp/
 
+
 CMD ["./notes-server"]
