@@ -25,7 +25,13 @@ jobs:
           node-version: '22.14.0'
 
       - name: Install dependencies
-        run: sudo npm ci
+        run: |
+          npm install --save-dev semantic-release \
+          @semantic-release/changelog \
+          @semantic-release/git \
+          @semantic-release/npm \
+          @semantic-release/github \
+          npm ci
 
       - name: Run Semantic Release
         run: npx semantic-release
