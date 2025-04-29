@@ -2,13 +2,15 @@ FROM golang:alpine AS builder
 
 WORKDIR /NotesServer
 RUN apk add --no-cache make git
-WORKDIR /app
 
-COPY go.mod go.sum ./
-RUN go mod download
+RUN ls
+RUN pwd
+
+#COPY ../go.mod ../go.sum ./
+#RUN go mod download
 
 COPY . .
-RUN make build
+RUN go build -o ./notes-server ../cmd 
 
 RUN ls
 RUN pwd
