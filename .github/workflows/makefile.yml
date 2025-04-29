@@ -14,8 +14,8 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install dependencies
-      run: make
+      run: make -C ./build
 
     - name: Run check
-      run: echo make check
+      run: echo make check -C ./build
 
