@@ -6,8 +6,6 @@ RUN apk add --no-cache make git
 COPY go.mod ./
 RUN go mod download
 
-#ADD go.mod .
-
 COPY . .
 RUN make -C ./build
 
