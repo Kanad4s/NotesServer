@@ -2,6 +2,7 @@ package cli
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -19,13 +20,14 @@ const (
 )
 
 func ShowNavigation() {
-	desc, ok := "", true
+	var err error
+	desc := ""
 	i := 0
-	for ok {
-		desc, ok = showOptionDescription(i)
-		if ok {
-			fmt.Printf("%d. %s, %v\n", i, desc, ok)
-		} 
+	for err != nil {
+		desc, err = showOptionDescription(i)
+		if err != nil {
+			fmt.Printf("%d. %s, %v\n", i, desc, err)
+		}
 		i++
 	}
 }
@@ -50,8 +52,8 @@ readNumber:
 	return val, nil
 }
 
-func showOptionDescription(option int) (desc string, ok bool) {
-	ok = true
+func showOptionDescription(option int) (desc string, err error) {
+	err = nil
 	switch option {
 	case showAll:
 		desc = "Show all groups and notes"
@@ -66,7 +68,7 @@ func showOptionDescription(option int) (desc string, ok bool) {
 	case removeNote:
 		desc = "Remove note from group"
 	default:
-		ok = false
+		err = errors.New("unsupported type")
 	}
-	return 
+	return
 }

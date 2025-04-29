@@ -3,15 +3,13 @@ package main
 import (
 	"NotesServer/internal/cli"
 	"NotesServer/internal/db"
-	"NotesServer/internal/log"
+	_ "NotesServer/internal/log"
 	"fmt"
 	"log/slog"
 )
 
 func init() {
-	log.Setup()
-	// log.Info("Main init")
-	// slog.Info("abs", slog.String("arg1", "val1"), slog.String("arg2", "val2"))
+	// log.Setup()
 }
 
 func main() {
@@ -23,6 +21,7 @@ func main() {
 	}
 	db1 := db.Connect(dbInfo)
 	db.Query("select * from professions", db1)
+	// db.Query("", db1)
 	db.Close(db1)
 	cli.ShowNavigation()
 	val, err := cli.GetNumber()
@@ -30,5 +29,6 @@ func main() {
 		panic(err)
 	}
 	fmt.Println(val)
+
 	slog.Info("Finishing...")
 }

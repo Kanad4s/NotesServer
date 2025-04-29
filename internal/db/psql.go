@@ -54,6 +54,8 @@ func Query(request string, db *sqlx.DB) {
 		panic(err)
 	}
 
+	fmt.Println(rows)
+
 	response := make([]Response, 0, 5)
 	if err := sqlx.StructScan(rows, &response); err != nil {
 		slog.Error(err.Error())

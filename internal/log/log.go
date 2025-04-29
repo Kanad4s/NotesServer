@@ -7,7 +7,7 @@ import (
 
 var file *os.File
 
-func Setup() {
+func init() {
 	logLevel := &slog.LevelVar{}
 	opts := &slog.HandlerOptions{
 		AddSource: false,
