@@ -4,20 +4,20 @@ WORKDIR /NotesServer
 
 COPY . .
 
-RUN apt-get update && \
-    apt-get install -y \
-    make \
-    && \
-    make -C ./build
+RUN ls
+RUN pwd
+
+RUN make -C ./build
+
 RUN ls
 
 FROM ubuntu:24.04
 
-WORKDIR /build
+WORKDIR /app
 
-COPY --from=builder /build/notes-server .
+COPY --from=builder /NotesServer/notes-server .
 
 RUN ls
 RUN pwd
 
-CMD [". /notes-server"]
+CMD ["./notes-server"]
