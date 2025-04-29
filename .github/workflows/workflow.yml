@@ -25,7 +25,7 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: sudo npm ci
+        run: sudo npm install
 
       - name: Run Semantic Release
         run: npx semantic-release
