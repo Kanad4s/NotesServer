@@ -6,10 +6,6 @@ on:
   pull_request:
     branches: [ "stage", "main" ]
 
-permissions:
-  packages: write
-  contents: read
-
 env:
   REGISTRY: ghcr.io
 
